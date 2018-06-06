@@ -1,0 +1,5 @@
+db:
+  image: postgres:10.4
+  container_name: test_db
+  ports:
+    - "5433:5433"

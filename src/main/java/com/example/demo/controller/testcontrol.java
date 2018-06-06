@@ -23,7 +23,7 @@ public class testcontrol {
 
     @RequestMapping("/find")
     public String findAll() {
-        String result = "hello";
+        String result = "";
         for (User u : repository.findAll()) {
             result += u.toString() + "<br>";
         }
@@ -43,15 +43,30 @@ public class testcontrol {
         repository.save(new User("first 2","last 2"));
         repository.save(new User("first 3","last 3"));
 
-//        repository.save(Arrays.asList(new User("first 1 ","last 1"),new User("first 2","last 2")));
         return "Save Done";
     }
 
+    @RequestMapping(value="/adduser", method = RequestMethod.POST)
+    public String addUser(@RequestBody User u){
+
+        if(u.getlastname() == "" || u.getusername() == "")
+            return "body invalid";
+        repository.save(new User(u.getusername(),u.getlastname()));
+        return "add user Done";
+    }
+
     @RequestMapping(value = "/edit/{userid}" , method = RequestMethod.PUT)
-    public String editById(@PathVariable("userid") long userid) {
+    public String editById(@PathVariable("userid")long userid,@RequestBody User u) {
 
+        if(u.getlastname() == "" || u.getusername() == "")
+            return "body invalid";
+        User result = repository.getOne(userid);
+        result.setusername(u.getusername());
+        result.setlastname(u.getlastname());
 
-        return "edit id "+userid+" success";
+        repository.save(result);
+
+        return "edit id "+userid+" Done";
     }
 
     @RequestMapping(value ="/delete", method = RequestMethod.DELETE)

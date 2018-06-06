@@ -21,6 +21,19 @@ public class User implements Serializable {
     protected User() {
     }
 
+    public void setusername(String username){
+        this.username = username;
+    }
+    public void setlastname(String lastname){
+        this.lastname = lastname;
+    }
+    public String getusername(){
+       return username;
+    }
+    public String getlastname(){
+        return lastname;
+    }
+
     public User(String username, String lastname) {
         this.username = username;
         this.lastname = lastname;
